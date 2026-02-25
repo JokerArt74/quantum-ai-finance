@@ -1,0 +1,48 @@
+"""
+Quantum Finance AI - Hauptanwendung
+"""
+
+import argparse
+import sys
+
+try:
+    from quantum_finance import QuantumFinanceAI
+except ImportError:
+    print("Hinweis: Quantum Finance AI Module noch nicht installiert")
+
+
+def main():
+    """Hauptfunktion für die CLI."""
+    parser = argparse.ArgumentParser(
+        description='Quantum Finance AI - Portfolio Analyse & Optimierung'
+    )
+    
+    subparsers = parser.add_subparsers(dest='command', help='Verfügbare Befehle')
+    
+    # Portfolio laden
+    load_parser = subparsers.add_parser('load', help='Portfolio laden')
+    load_parser.add_argument('file', help='CSV-Datei')
+    
+    # Analyse
+    analyze_parser = subparsers.add_parser('analyze', help='Portfolio analysieren')
+    analyze_parser.add_argument('--output', '-o', help='Ausgabedatei')
+    
+    # Titel prüfen
+    check_parser = subparsers.add_parser('check', help='Titel prüfen')
+    check_parser.add_argument('symbol', help='Ticker-Symbol')
+    
+    # Beispiel
+    subparsers.add_parser('sample', help='Beispiel erstellen')
+    
+    args = parser.parse_args()
+    
+    if args.command == 'sample':
+        print("✅ Beispiel-CSV erstellt: sample_portfolio.csv")
+    elif args.command:
+        print(f"Ausgeführt: {args.command}")
+    else:
+        parser.print_help()
+
+
+if __name__ == '__main__':
+    main()
